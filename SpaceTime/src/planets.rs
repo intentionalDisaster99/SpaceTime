@@ -7,21 +7,69 @@
  * 
 */
 
+use kiss3d::window::Window;
+use kiss3d::scene::SceneNode;
+use kiss3d::nalgebra::{Translation3};
+use nalgebra::Vector3;
+
 // The planet struct, though of course this includes all celestial bodies in space
 pub struct Planet {
 
 	// Positional members
-	position: Vector2,
-	velocity: Vector2,
+	position: Vector3<f32>,
+	velocity: Vector3<f32>,
 
 	// Characteristic members
 	mass: u64,
 	radius: u64,
-	color: color, // TODO Switch this to be a texture
+	color: Vector3<f32>, // TODO Switch this to be a texture
+
+	// Rendering Members
+	object: SceneNode,
+
+}
+
+
+
+impl Planet {
+
+	// A function to create a new planet
+	pub fn new() -> Self {
+		todo!();
+	}
+
+	// A function to initialize the planet on the window
+	pub fn init(&mut self, window: &mut Window) -> &mut Self {
+		self.object = window.add_sphere(self.radius as f32);
+		self.object.set_color(self.color.x, self.color.y, self.color.z);
+
+		self
+	}
+
+	// A function to draw the planet
+	pub fn draw(&mut self) -> &mut Self {
+		let newPos: Translation3<f32> = Translation3::<f32>::new(self.position.x, self.position.y, self.position.z);
+		self.object.set_local_translation(newPos);
+		self
+	}
+
+	// A function to update the position of the planet
+	pub fn update(&mut self) -> &mut Self{
+		todo!();
+	}
+
 
 
 }
 
+
+
+
+
+
+
+// Kiss3d has some of these functions already, so I'll use them
+/*
 
 // A simple vector struct
 pub struct Vector2<T> {
@@ -81,3 +129,4 @@ impl<T> Vector2<T> {
 }
 
 
+*/
