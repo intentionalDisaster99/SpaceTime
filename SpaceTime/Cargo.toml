@@ -1,0 +1,8 @@
+[package]
+name = "SpaceTime"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+kiss3d = "0.35"
+nalgebra = "0.32"
