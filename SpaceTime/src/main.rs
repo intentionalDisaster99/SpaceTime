@@ -36,7 +36,6 @@ fn main() {
 	// let window: &mut Window = gui.get_window();
     while gui.window.render() {
         gui.update_all_planets();
-		println!("{}", gui.planets[1].velocity);
     }
 }
 
@@ -47,4 +46,11 @@ fn add_in_planets(gui: &mut GUI) {
 
 	// Adding in earth 
 	gui.add_planet(5.972e24, 6378100.0*30.0).set_color(Vector3::<f32>::new(79.0,76.0,176.0)/255.0).move_to(Vector3::<f32>::new(1.0, 0.0, 0.0) * 1.496e11/Constants::VISUAL_SCALE_FACTOR/5.0).add_velocity(Vector3::<f32>::new(0.0,15.0,0.0));
+
+	// Another earth for testing
+	gui.add_planet(5.972e24, 6378100.0*30.0).set_color(Vector3::<f32>::new(79.0,76.0,176.0)/255.0).move_to(Vector3::<f32>::new(1.0, 0.0, 0.0) * 1.496e11/Constants::VISUAL_SCALE_FACTOR/3.50).add_velocity(Vector3::<f32>::new(0.0,15.0,0.0));
+	gui.add_planet(5.972e24, 6378100.0*30.0).set_color(Vector3::<f32>::new(79.0,76.0,176.0)/255.0).move_to(Vector3::<f32>::new(1.0, 0.0, 0.0) * 1.496e11/Constants::VISUAL_SCALE_FACTOR/4.50).add_velocity(Vector3::<f32>::new(0.0,15.0,0.0));
+	gui.add_planet(5.972e24, 6378100.0*30.0).set_color(Vector3::<f32>::new(79.0,76.0,176.0)/255.0).move_to(Vector3::<f32>::new(1.0, 0.0, 0.0) * 1.496e11/Constants::VISUAL_SCALE_FACTOR/7.50).add_velocity(Vector3::<f32>::new(0.0,15.0,0.0));
+	gui.add_planet(5.972e24, 6378100.0*30.0).set_color(Vector3::<f32>::new(79.0,76.0,176.0)/255.0).move_to(Vector3::<f32>::new(1.0, 0.0, 0.0) * 1.496e11/Constants::VISUAL_SCALE_FACTOR/6.50).add_velocity(Vector3::<f32>::new(0.0,15.0,10.0));
+	gui.add_planet(1.989e29, 6378100.0*30.0).set_color(Vector3::<f32>::new(79.0,76.0,176.0)/255.0).move_to(Vector3::<f32>::new(1.0, 0.0, 0.0) * 1.496e11/Constants::VISUAL_SCALE_FACTOR/1.50).add_velocity(Vector3::<f32>::new(0.0,15.0,1.0));
 }

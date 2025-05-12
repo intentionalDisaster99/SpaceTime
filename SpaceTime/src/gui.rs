@@ -3,7 +3,7 @@
  * File Name: 		gui.rs
  * Brief:			Handles the creation and upkeep of the gui and display
  * 
- * Status:			Working
+ * Status:			Working, being updated
  * 
  */
 
@@ -16,6 +16,7 @@ use kiss3d::nalgebra::{Translation3};
 use kiss3d::window::Window;
 use kiss3d::light::Light;
 
+piotafdsa
 
 pub struct GUI {
 
@@ -62,18 +63,17 @@ impl GUI {
 		for i in 0..self.planets.len() {
 
 			// Skipping the sun so that it stays in the middle
-			// if i == 0 { continue; }
+			if i == 0 { continue; }
 
 			for j in 0..self.planets.len() {
 
 				// Not adding force towards itself
-				if i == j { continue; }
+				// if i == j { continue; }
 
 				// Finding the magnitude
 				let point1 = Point3::from(self.planets[i].position * Constants::VISUAL_SCALE_FACTOR);				
 				let point2 = Point3::from(self.planets[j].position * Constants::VISUAL_SCALE_FACTOR);
 				let dist = distance(&point1, &point2);
-				println!("The distance squared is \t\t{}\nThe mass squared is \t\t\t{}", dist*dist, self.planets[i].mass * self.planets[j].mass);
 				if dist < 1e-5 {
 					continue; // Skip force calculations when they are very close to each other
 				}
