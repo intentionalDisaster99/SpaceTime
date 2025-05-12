@@ -9,6 +9,7 @@
 mod config;
 mod gui;
 mod planets;
+mod grid;
 
 use gui::*;
 use planets::*;
@@ -21,6 +22,8 @@ use kiss3d::nalgebra::{Translation3};
 
 // ! Note that there are multiple versions of nalgebra in this project
 // ! This will need to be fixed asap
+
+// Todo Change all of the colors to be Point3 so that I don't have to convert things
 
 fn main() {
 

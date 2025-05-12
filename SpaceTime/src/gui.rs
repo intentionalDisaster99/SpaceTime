@@ -16,7 +16,6 @@ use kiss3d::nalgebra::{Translation3};
 use kiss3d::window::Window;
 use kiss3d::light::Light;
 
-piotafdsa
 
 pub struct GUI {
 
