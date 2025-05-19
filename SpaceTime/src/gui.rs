@@ -61,7 +61,7 @@ impl GUI {
 		for i in 0..self.planets.len() {
 
 			// Skipping the sun so that it stays in the middle
-			if i == 0 { continue; }
+			// if i == 0 { continue; }
 
 			for j in 0..self.planets.len() {
 

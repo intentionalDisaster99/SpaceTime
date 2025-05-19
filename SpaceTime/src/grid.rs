@@ -50,7 +50,12 @@ impl Grid {
 			let planet_pos = Point3::new(planet.position.x, planet.position.y, planet.position.z);
 			let dist: f32 = distance(&position, &planet_pos);
 
-			output += planet.mass / (dist * dist); 
+			// Making sure there isn't a divide by zero error
+			if dist < 1e-10 {
+				continue
+			}
+
+			output += planet.mass / dist.powf(1.5); 
 		}
 		
 		// Negative so that it goes down
@@ -71,8 +76,8 @@ impl Grid {
 			let lower_y = -i as f32 + center.y;
 
 			// Saving the points we visit
-			let mut last_upper_point: Point3<f32> = Point3::new(-self.spacing*(number_of_gridlines.0 as f32), upper_y, Self::get_z_value(planets, Point3::new(-self.spacing*(number_of_gridlines.0 as f32),  upper_y, 0.0), self.scaling_factor));
-			let mut last_lower_point: Point3<f32> = Point3::new(-self.spacing*(number_of_gridlines.0 as f32), lower_y, Self::get_z_value(planets, Point3::new(-self.spacing*(number_of_gridlines.0 as f32),  lower_y, 0.0), self.scaling_factor));
+			let mut last_upper_point: Point3<f32> = Point3::new(-self.spacing*(number_of_gridlines.0 as f32) + center.0, upper_y + center.1, Self::get_z_value(planets, Point3::new(-self.spacing*(number_of_gridlines.0 as f32),  upper_y, 0.0), self.scaling_factor));
+			let mut last_lower_point: Point3<f32> = Point3::new(-self.spacing*(number_of_gridlines.0 as f32) + center.0, lower_y + center.1, Self::get_z_value(planets, Point3::new(-self.spacing*(number_of_gridlines.0 as f32),  lower_y, 0.0), self.scaling_factor));
 
 			// Iterating for the x values
 			let mut j: f32 = -self.spacing*(number_of_gridlines.0 as f32);

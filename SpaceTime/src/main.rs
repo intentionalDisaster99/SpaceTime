@@ -20,11 +20,11 @@ use kiss3d::window::Window;
 use kiss3d::light::Light;
 use kiss3d::nalgebra::{Translation3, Point3, Vector3};
 
-// ! Note that there are multiple versions of nalgebra in this project
-// ! This will need to be fixed asap
-
 // Todo Change all of the colors to be Point3 so that I don't have to convert things
 // Todo incorporate the grid into the GUI struct
+
+// HI SAM LOPEZ!!! 
+// This is my crappy code, please enjoy
 
 fn main() {
 
@@ -37,7 +37,7 @@ fn main() {
 	let mut gui: GUI = GUI::new("Planets");
 	add_in_planets(&mut gui);
 
-	let mut grid: Grid = Grid::new(0.2, 0.005, 1e-33);
+	let mut grid: Grid = Grid::new(0.2, 0.005, 1e-32);
 
 	// let window: &mut Window = gui.get_window();
     while gui.window.render() {
