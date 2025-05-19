@@ -11,8 +11,7 @@ use crate::config::Constants;
 
 use kiss3d::window::Window;
 use kiss3d::scene::SceneNode;
-use kiss3d::nalgebra::{Translation3, Point3};
-use nalgebra::{Vector3};
+use kiss3d::nalgebra::{Translation3, Point3, Vector3};
 
 // The planet struct, though of course this includes all celestial bodies in space
 pub struct Planet {
@@ -102,7 +101,7 @@ impl Planet {
 		if self.orbit_path.len() > Constants::MAX_PATH_LENGTH {
 			self.orbit_path.remove(0); 
 		}
-		
+
 		self
 	}
 

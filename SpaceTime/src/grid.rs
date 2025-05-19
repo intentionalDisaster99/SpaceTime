@@ -16,13 +16,24 @@ use kiss3d::window::Window;
 pub struct Grid {
 	spacing: f32,
 	color: Point3<f32>,
-	step_size: usize,
+	step_size: f32,
+	scaling_factor: f32,
 }
 
 impl Grid {
 
+	// Simple constructor
+	pub fn new(spacing: f32, step_size: f32, scaling_factor: f32) -> Self {
+		Self {
+			spacing,
+			step_size,
+			color: Point3::new(1.0, 1.0, 1.0),
+			scaling_factor,
+		}
+	}
+
 	// A function to calculate the z value at a certain location
-	pub fn get_z_value(planets: &Vec<Planet>, position: Point3<f32>) -> f32 {
+	pub fn get_z_value(planets: &Vec<Planet>, position: Point3<f32>, scaling_factor: f32) -> f32 {
 
 		/*
 		 * I couldn't find much about any actual equations to use here, so I am going to 
@@ -43,42 +54,125 @@ impl Grid {
 		}
 		
 		// Negative so that it goes down
-		-output
+		-output * scaling_factor
 
 	}
 
 	// Draws the actual grid itself
-	pub fn draw_grid(&self, window: &mut Window, planets: &Vec<Planet>, max_dimensions: (usize, usize), center: Point3<f32>) {
-
-			
-		// We need to save the last values we were at so
-		let mut last_upper_point: Point3<f32> = Point3::new(-(max_dimensions.0 as f32), 0.0, Self::get_z_value(planets, Point3::new(max_dimensions.0 as f32, 0.0 as f32, 0.0)));
-		let mut last_lower_point: Point3<f32> = Point3::new(-(max_dimensions.0 as f32), -self.spacing, Self::get_z_value(planets, Point3::new(max_dimensions.0 as f32,  -(self.spacing as f32), 0.0)));
+	pub fn draw_grid(&self, window: &mut Window, planets: &Vec<Planet>, number_of_gridlines: (usize, usize), center: Point3<f32>) {
 
 		// Drawing the horizontal lines
 		// Note that this isn't perfect, it rounds a few things, but I don't think that will be too huge a deal
-		for y in (0..max_dimensions.1).step_by(self.spacing as usize) {
+		let mut i: f32 = 0.0;
+		while i <= (number_of_gridlines.1 as f32) * self.spacing {
+
+			// Shifting the y to match the center
+			let upper_y = i as f32 + center.y;
+			let lower_y = -i as f32 + center.y;
+
+			// Saving the points we visit
+			let mut last_upper_point: Point3<f32> = Point3::new(-self.spacing*(number_of_gridlines.0 as f32), upper_y, Self::get_z_value(planets, Point3::new(-self.spacing*(number_of_gridlines.0 as f32),  upper_y, 0.0), self.scaling_factor));
+			let mut last_lower_point: Point3<f32> = Point3::new(-self.spacing*(number_of_gridlines.0 as f32), lower_y, Self::get_z_value(planets, Point3::new(-self.spacing*(number_of_gridlines.0 as f32),  lower_y, 0.0), self.scaling_factor));
 
 			// Iterating for the x values
-			for x in (-(max_dimensions.0 as isize)..(max_dimensions.0 as isize)).step_by(self.step_size) {
+			let mut j: f32 = -self.spacing*(number_of_gridlines.0 as f32);
+			while j <= (number_of_gridlines.0 as f32) * self.spacing {
 
-				// The location of this point
-				let temp: Point3<f32> =  Point3::new(x as f32, y as f32, 0.0);
-				let b: Point3<f32> = Point3::new(x as f32, y as f32, Self::get_z_value(planets, temp));
+				// Shifting the x to match the center
+				let x = j + center.x;
 
-				// Drawing the sub line for the upper one
-				window.draw_line(&last_upper_point, &b, &self.color);
+				// The top
+
+				// Figuring out where the next point is
+				let mut here: Point3<f32> = Point3::new(x,upper_y,Self::get_z_value(planets, Point3::new(x,upper_y,0.0), self.scaling_factor));
+  
+  				// Drawing it
+				window.draw_line(&last_upper_point, &here, &self.color);
 
 				// Saving this point
-				last_upper_point = b;
+				last_upper_point = here;
 
+				// Skipping the bottom one because we don't need to draw twice if they are in the same spot
+				if lower_y == upper_y {
+					j += self.step_size;
+					continue;
+				}
 
-				// Skipping if the y is zero because there's no reason to draw it twice
-				if y == 0 { continue; }
+				// The bottom
 
-				// Drawing the sub line for the lower one
+				// Figuring out where the next point is
+				here = Point3::new(x,lower_y,Self::get_z_value(planets, Point3::new(x,lower_y,0.0), self.scaling_factor));
+
+				// Drawing it
+				window.draw_line(&last_lower_point, &here, &self.color);
+
+				// Saving this point
+				last_lower_point = here;
+
+				// Incrementing
+				j += self.step_size;
 
 			}
+
+			// Incrementing
+			i += self.spacing;
+
+		}
+
+		// Now for the lines parallel to the y 
+		i = 0.0;
+		while i <= (number_of_gridlines.0 as f32) * self.spacing {
+
+			// Shifting the y to match the center
+			let upper_x = i as f32 + center.x;
+			let lower_x = -i as f32 + center.x;
+
+			// Saving the points we visit
+			let mut last_upper_point: Point3<f32> = Point3::new(upper_x, -self.spacing*(number_of_gridlines.1 as f32), Self::get_z_value(planets, Point3::new(upper_x, -self.spacing*(number_of_gridlines.1 as f32), 0.0), self.scaling_factor));
+			let mut last_lower_point:Point3<f32> = Point3::new(lower_x, -self.spacing*(number_of_gridlines.1 as f32), Self::get_z_value(planets, Point3::new(lower_x, -self.spacing*(number_of_gridlines.1 as f32), 0.0), self.scaling_factor)); 
+
+			// Iterating for the y values
+			let mut j: f32 = -self.spacing*(number_of_gridlines.1 as f32);
+			while j <= (number_of_gridlines.1 as f32) * self.spacing {
+
+				// Shifting the y to match the center
+				let y = j + center.y;
+
+				// The top
+
+				// Figuring out where the next point is
+				let mut here: Point3<f32> = Point3::new(upper_x, y,Self::get_z_value(planets, Point3::new(upper_x, y,0.0), self.scaling_factor));
+
+				// Drawing it
+				window.draw_line(&last_upper_point, &here, &self.color);
+
+				// Saving this point
+				last_upper_point = here;
+
+				// Skipping the bottom one because we don't need to draw twice if they are in the same spot
+				if lower_x == upper_x {
+					j += self.step_size;
+					continue;
+				}
+
+				// The bottom
+
+				// Figuring out where the next point is
+				here = Point3::new(lower_x,y,Self::get_z_value(planets, Point3::new(lower_x,y,0.0), self.scaling_factor));
+
+				// Drawing it
+				window.draw_line(&last_lower_point, &here, &self.color);
+
+				// Saving this point
+				last_lower_point = here;
+
+				// Incrementing
+				j += self.step_size;
+
+			}
+
+			// Incrementing
+			i += self.spacing;
 
 		}
 
