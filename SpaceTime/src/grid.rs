@@ -76,8 +76,8 @@ impl Grid {
 			let lower_y = -i as f32 + center.y;
 
 			// Saving the points we visit
-			let mut last_upper_point: Point3<f32> = Point3::new(-self.spacing*(number_of_gridlines.0 as f32) + center.x, upper_y + center.y, Self::get_z_value(planets, Point3::new(-self.spacing*(number_of_gridlines.0 as f32),  upper_y, 0.0), self.scaling_factor));
-			let mut last_lower_point: Point3<f32> = Point3::new(-self.spacing*(number_of_gridlines.0 as f32) + center.x, lower_y + center.y, Self::get_z_value(planets, Point3::new(-self.spacing*(number_of_gridlines.0 as f32),  lower_y, 0.0), self.scaling_factor));
+			let mut last_upper_point: Point3<f32> = Point3::new(-self.spacing*(number_of_gridlines.0 as f32) + center.x, upper_y, Self::get_z_value(planets, Point3::new(-self.spacing*(number_of_gridlines.0 as f32) + center.x,  upper_y, 0.0), self.scaling_factor));
+			let mut last_lower_point: Point3<f32> = Point3::new(-self.spacing*(number_of_gridlines.0 as f32) + center.x, lower_y, Self::get_z_value(planets, Point3::new(-self.spacing*(number_of_gridlines.0 as f32) + center.x,  lower_y, 0.0), self.scaling_factor));
 
 			// Iterating for the x values
 			let mut j: f32 = -self.spacing*(number_of_gridlines.0 as f32);
@@ -133,8 +133,8 @@ impl Grid {
 			let lower_x = -i as f32 + center.x;
 
 			// Saving the points we visit
-			let mut last_upper_point: Point3<f32> = Point3::new(upper_x, -self.spacing*(number_of_gridlines.1 as f32), Self::get_z_value(planets, Point3::new(upper_x, -self.spacing*(number_of_gridlines.1 as f32), 0.0), self.scaling_factor));
-			let mut last_lower_point:Point3<f32> = Point3::new(lower_x, -self.spacing*(number_of_gridlines.1 as f32), Self::get_z_value(planets, Point3::new(lower_x, -self.spacing*(number_of_gridlines.1 as f32), 0.0), self.scaling_factor)); 
+			let mut last_upper_point: Point3<f32> = Point3::new(upper_x, -self.spacing*(number_of_gridlines.1 as f32)+center.y, Self::get_z_value(planets, Point3::new(upper_x, -self.spacing*(number_of_gridlines.1 as f32)+center.y, 0.0), self.scaling_factor));
+			let mut last_lower_point:Point3<f32> = Point3::new(lower_x, -self.spacing*(number_of_gridlines.1 as f32)+center.y, Self::get_z_value(planets, Point3::new(lower_x, -self.spacing*(number_of_gridlines.1 as f32)+center.y, 0.0), self.scaling_factor)); 
 
 			// Iterating for the y values
 			let mut j: f32 = -self.spacing*(number_of_gridlines.1 as f32);
