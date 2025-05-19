@@ -3,7 +3,7 @@
  * File Name: 		gui.rs
  * Brief:			Handles the creation and upkeep of the gui and display
  * 
- * Status:			Working
+ * Status:			Working, being updated
  * 
  */
 
@@ -11,8 +11,7 @@ use crate::planets::*;
 use crate::config::*;
 
 
-use nalgebra::{Vector3, distance, Point3};
-use kiss3d::nalgebra::{Translation3};
+use kiss3d::nalgebra::{Translation3, Vector3, distance, Point3};
 use kiss3d::window::Window;
 use kiss3d::light::Light;
 
@@ -52,7 +51,7 @@ impl GUI {
 	}
 
 	// Updates all of the planets including the gravitational force between each
-	pub fn update_all_planets(&mut self) -> &mut Self {
+	pub fn update_all_planets(&mut self, draw_paths: bool) -> &mut Self {
 
 		// * There are some easy improvements to this algorithm
 		// * I just don't have as much experience with Rust ownership
@@ -73,7 +72,6 @@ impl GUI {
 				let point1 = Point3::from(self.planets[i].position * Constants::VISUAL_SCALE_FACTOR);				
 				let point2 = Point3::from(self.planets[j].position * Constants::VISUAL_SCALE_FACTOR);
 				let dist = distance(&point1, &point2);
-				println!("The distance squared is \t\t{}\nThe mass squared is \t\t\t{}", dist*dist, self.planets[i].mass * self.planets[j].mass);
 				if dist < 1e-5 {
 					continue; // Skip force calculations when they are very close to each other
 				}
@@ -94,13 +92,24 @@ impl GUI {
 		}
 
 		// Updates each planet
-		for planet in self.planets.iter_mut() {
-			planet.update().draw().draw_path(&mut self.window);
+		if draw_paths {
+			for planet in self.planets.iter_mut() {
+				planet.update().draw().draw_path(&mut self.window);
+			}
+		} else {
+			for planet in self.planets.iter_mut() {
+				planet.update().draw();
+			}
 		}
 
 		self
 	}
 
+	// Gets the sun's position, assuming that the sun is the first planet in the list
+	pub fn get_sun_position(&self) -> Point3<f32> {
+		let pos: Vector3<f32> = self.planets[0].position;
+		Point3::new(pos.x, pos.y, pos.z)
+	}
 
 }
 
