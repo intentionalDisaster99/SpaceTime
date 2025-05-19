@@ -3,7 +3,7 @@
  * File Name: 		main.rs
  * Brief:			Creates a simple visualization that shows planets and the bending of spacetime
  * 
- * Status: 			Working
+ * Status: 			Functional
  * 
 */
 mod config;

@@ -3,7 +3,7 @@
  * File Name: 		planets.rs
  * Brief:			Provides the structs for the main rust file
  * 
- * Status:			Working
+ * Status:			Functional
  * 
 */
 

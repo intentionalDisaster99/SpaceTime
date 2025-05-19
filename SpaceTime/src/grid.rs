@@ -3,7 +3,7 @@
  * File Name: 		grid.rs
  * Brief:			Provides the grid that shows the actual spacetime bending with mass
  * 
- * Status:			In progress
+ * Status:			Functional
  * 
  */
 

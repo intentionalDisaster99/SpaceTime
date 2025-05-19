@@ -3,7 +3,7 @@
  * File Name: 		config.rs
  * Brief:			Provides some global constants for the entirety of the project
  * 
- * Status:			Working, but still being updated
+ * Status:			Functional
  * 
  */
 

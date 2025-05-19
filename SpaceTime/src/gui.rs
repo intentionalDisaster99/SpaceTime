@@ -3,7 +3,7 @@
  * File Name: 		gui.rs
  * Brief:			Handles the creation and upkeep of the gui and display
  * 
- * Status:			Working, being updated
+ * Status:			Functional
  * 
  */
 
