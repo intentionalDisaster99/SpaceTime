@@ -54,14 +54,6 @@ impl Planet {
 		}
 	}
 
-	// A function to initialize the planet on the window
-	pub fn init(&mut self, window: &mut Window) -> &mut Self {
-		self.object = window.add_sphere(self.radius);
-		self.object.set_color(self.color.x, self.color.y, self.color.z);
-
-		self
-	}
-
 	// A function to draw the planet
 	pub fn draw(&mut self) -> &mut Self {
 		

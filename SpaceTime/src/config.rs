@@ -16,5 +16,4 @@ impl Constants {
 	pub const G: f32 = 6.67382e-11;
 	pub const VISUAL_SCALE_FACTOR: f32 = 10e10;
 	pub const MAX_PATH_LENGTH: usize = 1000;
-	pub const GRID_SCALE_FACTOR: f32 = 1.0;
 }

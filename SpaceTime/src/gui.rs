@@ -11,7 +11,7 @@ use crate::planets::*;
 use crate::config::*;
 
 
-use kiss3d::nalgebra::{Translation3, Vector3, distance, Point3};
+use kiss3d::nalgebra::{Vector3, distance, Point3};
 use kiss3d::window::Window;
 use kiss3d::light::Light;
 
@@ -37,10 +37,6 @@ impl GUI {
 
 		Self { window: window, planets: Vec::<Planet>::new() }
 
-	}
-
-	pub fn get_window(&mut self) -> &mut Window {
-		&mut self.window
 	}
 
 	// A function to take in a planet and add it to the gui
