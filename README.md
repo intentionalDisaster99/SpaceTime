@@ -8,7 +8,7 @@ Well, hopefully it will be a simple visualization of the fabric of spacetime as 
 Well, so far I have managed to get a planet to orbit around a central body. It is also completely scalable \(if your computer can handle it\) so you can get as many planets as you would like. 
 In the future though, I have some ideas I would love to get done:
 - [ ] Have a demo of the solar system
-- [ ] Add in the fabric of spacetime
+- [X] Add in the fabric of spacetime
 
 
 
